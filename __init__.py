@@ -52,7 +52,7 @@ class SomeBot(Resource):
     else:
       response_text = 'You need to ask me something.'
 
-    resp_json = {"response_type": "in_channel","text": response_text,"attachments": [{"text": response_text}]}
+    resp_json = {"response_type": "in_channel","attachments": [{"text": response_text}]}
     return resp_json
 
 
