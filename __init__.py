@@ -5,6 +5,8 @@ import json
 import requests
 import os
 import subprocess
+import untangle
+from xml.etree import ElementTree
 
 slack_token = 'u35qbbrVjTk7I7mzFuPuEQC1'
 
@@ -19,6 +21,19 @@ def getMlsUrl(mlsId):
   return r.url
 
 
+def getDefinition(word):
+  apiKey = '52935ccf-85b9-40fa-9461-0a53fc256b4e'
+  url = 'http://www.dictionaryapi.com/api/v1/references/collegiate/xml/{0}?key={1}'.format(word, apiKey)
+  r = requests.get(url)
+  tree = ElementTree.fromstring(r.content)
+  definitions = []
+  for entry in tree[0].findall('def'):
+    for definition in entry.findall('dt'):
+        definitions.append(definition.text)
+
+  return definitions
+
+
 class SomeBot(Resource):
   def post(self):
     try:
@@ -26,9 +41,21 @@ class SomeBot(Resource):
     except:
       return Response(status=400)
 
-    responseText = 'Testing'
-    resp_json = {"response_type": "in_channel","text": responseText,"attachments": [{"text":"Partly cloudy today and tomorrow"}]}
+    slack_input = request.form['text']
+    command = slack_input.split(' ')[0]
+
+    if command == 'define':
+      word = slack_input.split(' ')[1]
+      definitions = getDefinition(word)
+      response_text = '{0}:\n'.format(word)
+      for definition in definitions:
+          response_text = '{0}{1}\n'.format(response_text, definition)
+    else:
+      response_text = 'You need to ask me something.'
+
+    resp_json = {"response_type": "in_channel","text": response_text,"attachments": [{"text": response_text}]}
     return resp_json
+
 
 class GitUpdate(Resource):
   def post(self):
