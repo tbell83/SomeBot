@@ -5,7 +5,6 @@ import json
 import requests
 import os
 import subprocess
-import untangle
 from xml.etree import ElementTree
 
 slack_token = 'u35qbbrVjTk7I7mzFuPuEQC1'
