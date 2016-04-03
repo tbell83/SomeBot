@@ -32,8 +32,8 @@ class SomeBot(Resource):
 class GitUpdate(Resource):
 	def post(self):
 		try:
-		    cmd_output = subprocess.check_output(
-		        ['git', 'pull', 'origin', 'master'],)
+		    cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'],)
+            subprocess.check_output(['touch','../tmp/restart.txt'],)
 		    return jsonify({'msg': str(cmd_output)})
 		except subprocess.CalledProcessError as error:
 		    return jsonify({'msg': str(error.output)})
