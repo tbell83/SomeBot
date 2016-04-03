@@ -26,13 +26,14 @@ class SomeBot(Resource):
 		except:
 			return Response(status=400)
 
+        responseText = 'Testing'
 		resp_json = {"response_type": "in_channel","text": responseText,"attachments": [{"text":"Partly cloudy today and tomorrow"}]}
 		return resp_json
 
 class GitUpdate(Resource):
 	def post(self):
 		try:
-		    cmd_output = subprocess.check_output(['git', 'pull', 'origin', 'master'],)
+		    cmd_output = subprocess.check_output(['cd','slack_api','&&','git', 'pull', 'origin', 'master'],)
             subprocess.check_output(['touch','../tmp/restart.txt'],)
 		    return jsonify({'msg': str(cmd_output)})
 		except subprocess.CalledProcessError as error:
