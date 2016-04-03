@@ -3,8 +3,6 @@ from flask import Flask, request, Response, jsonify
 from flask_restful import Resource, Api, reqparse
 import json
 import requests
-import hmac
-import hashlib
 import os
 import subprocess
 
@@ -22,23 +20,23 @@ def getMlsUrl(mlsId):
 
 
 class SomeBot(Resource):
-		def post(self):
-				try:
-						responseText = request.form['token']
-				except:
-						return Response(status=400)
-				
-				resp_json = {"response_type": "in_channel","text": responseText,"attachments": [{"text":"Partly cloudy today and tomorrow"}]}
-				return resp_json
+    def post(self):
+		try:
+			responseText = request.form['token']
+		except:
+			return Response(status=400)
+
+		resp_json = {"response_type": "in_channel","text": responseText,"attachments": [{"text":"Partly cloudy today and tomorrow"}]}
+		return resp_json
 
 class GitUpdate(Resource):
-		def post(self):
-				try:
-				    cmd_output = subprocess.check_output(
-				        ['git', 'pull', 'origin', 'master'],)
-				    return jsonify({'msg': str(cmd_output)})
-				except subprocess.CalledProcessError as error:
-				    return jsonify({'msg': str(error.output)})
+	def post(self):
+		try:
+		    cmd_output = subprocess.check_output(
+		        ['git', 'pull', 'origin', 'master'],)
+		    return jsonify({'msg': str(cmd_output)})
+		except subprocess.CalledProcessError as error:
+		    return jsonify({'msg': str(error.output)})
 
 
 api.add_resource(SomeBot, '/')
@@ -46,4 +44,3 @@ api.add_resource(GitUpdate, '/git')
 
 if __name__ == '__main__':
     app.run(debug=True)
-
