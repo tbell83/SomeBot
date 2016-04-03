@@ -33,11 +33,11 @@ class SomeBot(Resource):
 class GitUpdate(Resource):
 	def post(self):
 		try:
-		    cmd_output = subprocess.Popen(['git', 'pull', 'origin', 'master'],cwd='/home/tbell/slack.tombell.io/slack_api')
-            subprocess.Popen(['touch','/home/tbell/slack.tombell.io/tmp/restart.txt'],)
-		    return jsonify({'msg': str(cmd_output)})
+		    subprocess.Popen(['git', 'pull', 'origin', 'master'],cwd='/home/tbell/slack.tombell.io/slack_api')
+            subprocess.Popen(['touch','restart.txt'],cwd='/home/tbell/slack.tombell.io/tmp/')
+		    return jsonify({'msg': 'Success'})
 		except subprocess.CalledProcessError as error:
-		    return jsonify({'msg': str(error.output)})
+		    return jsonify({'msg': 'Failure'})
 
 
 api.add_resource(SomeBot, '/')
