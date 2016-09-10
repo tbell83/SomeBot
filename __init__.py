@@ -5,12 +5,17 @@ import json
 import requests
 import os
 import subprocess
+from dice_roll import RollDice
 from xml.etree import ElementTree
 
 slack_token = 'u35qbbrVjTk7I7mzFuPuEQC1'
 
 app = Flask(__name__)
 api = Api(app)
+
+def getDiceRoll(input):
+  return RollDice.roll(input)
+
 
 def getMlsUrl(mlsId):
   Url = 'http://www.realtor.com/realestateandhomes-search?mlslid={0}'.format(mlsId)
@@ -49,6 +54,9 @@ class SomeBot(Resource):
       response_text = '{0}:\n'.format(word)
       for definition in definitions:
           response_text = '{0}{1}\n'.format(response_text, definition)
+    elif command == 'roll':
+      input = slack_input.split('roll ')[1]
+      response_text = getDiceRoll(input)
     else:
       response_text = 'You need to ask me something.'
 
