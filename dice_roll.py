@@ -1,10 +1,10 @@
 from random import randint
 
 class RollDice:
-	def die_roll(faces):
+	def die_roll(self, faces):
 		return randint(1,faces)
 
-	def roll_command(input):
+	def roll_command(self, input):
 		try:
 			die_count = int(input.split('d')[0])
 		except:
@@ -24,13 +24,13 @@ class RollDice:
 		result += modifier
 		return result
 
-	def roll(input):
+	def roll(self, input):
 		result = 0
 		for command in input.split(' + '):
 			result += roll_command(command)
 		return result
 
-	def test():
+	def test(self):
 		print roll('d1')
 		print "roll('d1')"
 		print roll('d20')
