@@ -14,8 +14,8 @@ app = Flask(__name__)
 api = Api(app)
 
 def getDiceRoll(input):
-  return input
-  # return RollDice.roll(input)
+  # return input
+  return RollDice.roll(input)
 
 
 def getMlsUrl(mlsId):
