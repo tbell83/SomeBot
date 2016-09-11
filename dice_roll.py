@@ -1,6 +1,9 @@
 from random import randint
 
 class RollDice:
+	def __init__(self):
+		farts = 'farts'
+
 	def die_roll(self, faces):
 		return randint(1,faces)
 
@@ -20,14 +23,14 @@ class RollDice:
 	# 	print 'Count: {}\nFaces: {}\nModifier: {}'.format(die_count, die_faces, modifier)
 		result = 0
 		for i in range(0,die_count):
-			result += die_roll(die_faces)
+			result += self.die_roll(die_faces)
 		result += modifier
 		return result
 
 	def roll(self, input):
 		result = 0
 		for command in input.split(' + '):
-			result += roll_command(command)
+			result += self.roll_command(command)
 		return result
 
 	def test(self):
