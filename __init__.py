@@ -15,7 +15,9 @@ api = Api(app)
 
 def getDiceRoll(input):
   # return input
-  return RollDice.roll(input)
+  Dice = RollDice()
+  number = Dice.roll(input)
+  return number
 
 
 def getMlsUrl(mlsId):
